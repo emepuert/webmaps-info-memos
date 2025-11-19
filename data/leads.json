@@ -1,8 +1,17 @@
 {
   "stats": {
-    "total_leads": 0,
-    "total_webmaps": 0
+    "total_leads": 1,
+    "total_webmaps": 2
   },
-  "leads": []
+  "leads": [
+    {
+      "uuid": "2b2d400d-a011-40a9-8272-68783664de66",
+      "city": "Capua",
+      "area_ha": 21.4,
+      "layers_count": 5,
+      "versions_count": 2,
+      "latest_version": "v2_2025-11-19_22h22",
+      "last_update": "2025-11-19T22:22:14.200058"
+    }
+  ]
 }
-

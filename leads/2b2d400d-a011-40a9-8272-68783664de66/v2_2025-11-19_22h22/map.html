@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebMap - 2b2d400d-a011-40a9-8272-68783664de66</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #header {
+            background: linear-gradient(135deg, #2C3E50 0%, #34495E 100%);
+            color: white;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        #header h1 {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        #header .info {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        #map {
+            flex: 1;
+            background: #e0e0e0;
+        }
+        
+        .leaflet-control-layers {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .layer-group-header {
+            font-weight: bold;
+            background: #f0f0f0;
+            padding: 5px;
+            margin-top: 5px;
+            border-left: 3px solid #2C3E50;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>🗺️ 2b2d400d-a011-40a9-8272-68783664de66</h1>
+        <div class="info">
+            📍 Capua | 📏 21.4 ha | 
+            📅 2025-11-19_22h22 | v2
+        </div>
+    </div>
+    
+    <div id="map"></div>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <script>
+        // Initialiser la carte
+        const map = L.map('map').setView([0, 0], 2);
+        
+        // Fond de carte
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+        
+        // Couleurs par type de géométrie
+        const colors = {
+            'Point': '#E74C3C',
+            'LineString': '#3498DB',
+            'Polygon': '#27AE60'
+        };
+        
+        // Groupes de couches
+        const overlayMaps = {};
+        let allLayers = [];
+        
+        // Charger les couches
+        const layers = [
+        {
+                "name": "Power Lines (intersect)",
+                "type": "layer",
+                "geometry_type": "Polygon",
+                "feature_count": 10,
+                "file": "Power_Lines__intersect_.geojson"
+        },
+        {
+                "name": "Roads (intersect)",
+                "type": "layer",
+                "geometry_type": "Polygon",
+                "feature_count": 32,
+                "file": "Roads__intersect_.geojson"
+        },
+        {
+                "name": "it_inicio_solar_belt__v2_1_2__surface (intersect)",
+                "type": "layer",
+                "geometry_type": "Polygon",
+                "feature_count": 40,
+                "file": "it_inicio_solar_belt__v2_1_2__surface__intersect_.geojson"
+        },
+        {
+                "name": "Lead_2b2d400d-a011-40a9-8272-68783664de66_Polygon",
+                "type": "layer",
+                "geometry_type": "Polygon",
+                "feature_count": 1,
+                "file": "Lead_2b2d400d-a011-40a9-8272-68783664de66_Polygon.geojson"
+        },
+        {
+                "name": "\ud83c\udfe1 Parcelles cadastrales",
+                "type": "layer",
+                "geometry_type": "Polygon",
+                "feature_count": 5,
+                "file": "__Parcelles_cadastrales.geojson"
+        }
+];
+        
+        let loadedCount = 0;
+        const totalLayers = layers.length;
+        
+        layers.forEach(layerInfo => {
+            fetch(`data/${layerInfo.file}`)
+                .then(response => response.json())
+                .then(data => {
+                    const style = {
+                        color: colors[layerInfo.geometry_type] || '#000000',
+                        weight: layerInfo.geometry_type === 'LineString' ? 3 : 2,
+                        fillColor: colors[layerInfo.geometry_type] || '#000000',
+                        fillOpacity: 0.3
+                    };
+                    
+                    const geojsonLayer = L.geoJSON(data, {
+                        style: style,
+                        pointToLayer: (feature, latlng) => {
+                            return L.circleMarker(latlng, {
+                                radius: 6,
+                                fillColor: colors['Point'],
+                                color: '#000',
+                                weight: 1,
+                                opacity: 1,
+                                fillOpacity: 0.8
+                            });
+                        },
+                        onEachFeature: (feature, layer) => {
+                            if (feature.properties) {
+                                let popupContent = '<div style="max-height: 200px; overflow-y: auto;">';
+                                popupContent += `<h3>${layerInfo.name}</h3>`;
+                                for (let key in feature.properties) {
+                                    if (feature.properties[key] !== null) {
+                                        popupContent += `<b>${key}:</b> ${feature.properties[key]}<br>`;
+                                    }
+                                }
+                                popupContent += '</div>';
+                                layer.bindPopup(popupContent);
+                            }
+                        }
+                    });
+                    
+                    overlayMaps[`${layerInfo.name} (${layerInfo.feature_count})`] = geojsonLayer;
+                    geojsonLayer.addTo(map);
+                    allLayers.push(geojsonLayer);
+                    
+                    loadedCount++;
+                    
+                    // Quand toutes les couches sont chargées, zoomer sur l'étendue
+                    if (loadedCount === totalLayers && allLayers.length > 0) {
+                        const group = L.featureGroup(allLayers);
+                        map.fitBounds(group.getBounds().pad(0.1));
+                        
+                        // Ajouter le contrôle des couches
+                        L.control.layers(null, overlayMaps, { collapsed: false }).addTo(map);
+                    }
+                })
+                .catch(error => console.error(`Erreur chargement ${layerInfo.file}:`, error));
+        });
+        
+        // Échelle
+        L.control.scale({ imperial: false }).addTo(map);
+    </script>
+</body>
+</html>

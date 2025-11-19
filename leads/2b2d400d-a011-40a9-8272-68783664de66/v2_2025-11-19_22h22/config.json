@@ -1,0 +1,103 @@
+{
+  "lead_uuid": "2b2d400d-a011-40a9-8272-68783664de66",
+  "lead_city": "Capua",
+  "lead_area_ha": 21.4,
+  "version": 2,
+  "timestamp": "2025-11-19_22h22",
+  "export_date": "2025-11-19T22:22:14.200058",
+  "structure": {
+    "name": "📊 2b2d400d-a011-40a9-8272-68783664de66",
+    "type": "group",
+    "children": [
+      {
+        "name": "📁 📐 Polygones",
+        "type": "group",
+        "children": [
+          {
+            "name": "Power Lines (intersect)",
+            "type": "layer",
+            "geometry_type": "Polygon",
+            "feature_count": 10,
+            "file": "Power_Lines__intersect_.geojson"
+          },
+          {
+            "name": "Roads (intersect)",
+            "type": "layer",
+            "geometry_type": "Polygon",
+            "feature_count": 32,
+            "file": "Roads__intersect_.geojson"
+          },
+          {
+            "name": "it_inicio_solar_belt__v2_1_2__surface (intersect)",
+            "type": "layer",
+            "geometry_type": "Polygon",
+            "feature_count": 40,
+            "file": "it_inicio_solar_belt__v2_1_2__surface__intersect_.geojson"
+          },
+          {
+            "name": "Lead_2b2d400d-a011-40a9-8272-68783664de66_Polygon",
+            "type": "layer",
+            "geometry_type": "Polygon",
+            "feature_count": 1,
+            "file": "Lead_2b2d400d-a011-40a9-8272-68783664de66_Polygon.geojson"
+          }
+        ]
+      },
+      {
+        "name": "🏡 Parcelles cadastrales",
+        "type": "group",
+        "children": [
+          {
+            "name": "🏡 Parcelles cadastrales",
+            "type": "layer",
+            "geometry_type": "Polygon",
+            "feature_count": 5,
+            "file": "__Parcelles_cadastrales.geojson"
+          }
+        ]
+      },
+      {
+        "name": "🔌 Raccordement",
+        "type": "group",
+        "children": []
+      }
+    ]
+  },
+  "layers": [
+    {
+      "name": "Power Lines (intersect)",
+      "type": "layer",
+      "geometry_type": "Polygon",
+      "feature_count": 10,
+      "file": "Power_Lines__intersect_.geojson"
+    },
+    {
+      "name": "Roads (intersect)",
+      "type": "layer",
+      "geometry_type": "Polygon",
+      "feature_count": 32,
+      "file": "Roads__intersect_.geojson"
+    },
+    {
+      "name": "it_inicio_solar_belt__v2_1_2__surface (intersect)",
+      "type": "layer",
+      "geometry_type": "Polygon",
+      "feature_count": 40,
+      "file": "it_inicio_solar_belt__v2_1_2__surface__intersect_.geojson"
+    },
+    {
+      "name": "Lead_2b2d400d-a011-40a9-8272-68783664de66_Polygon",
+      "type": "layer",
+      "geometry_type": "Polygon",
+      "feature_count": 1,
+      "file": "Lead_2b2d400d-a011-40a9-8272-68783664de66_Polygon.geojson"
+    },
+    {
+      "name": "🏡 Parcelles cadastrales",
+      "type": "layer",
+      "geometry_type": "Polygon",
+      "feature_count": 5,
+      "file": "__Parcelles_cadastrales.geojson"
+    }
+  ]
+}
