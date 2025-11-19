@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebMaps Info-Mémos</title>
+    <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>🗺️ WebMaps Info-Mémos</h1>
+            <p class="subtitle">Cartes interactives des leads photovoltaïques</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="total-leads">0</span>
+                    <span class="stat-label">Leads</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="total-webmaps">0</span>
+                    <span class="stat-label">WebMaps</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="leads-grid" id="leads-container">
+            <div class="empty-state">
+                <h2>Aucune WebMap disponible</h2>
+                <p>Exportez votre premier lead depuis QGIS pour commencer !</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="assets/app.js"></script>
+</body>
+</html>
+
